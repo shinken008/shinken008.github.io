@@ -29,8 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.1.1"><link rel="alternate" href="/atom.xml" title="Shin's blog" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Shin's blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
 <body>
@@ -358,7 +359,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    350
+                    328
                 </div>
                 
 
@@ -376,45 +377,53 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h2 id="traverse-开始遍历"><a href="#traverse-开始遍历" class="headerlink" title="traverse 开始遍历"></a>traverse 开始遍历</h2><p> <a target="_blank" rel="noopener" href="https://github.com/babel/babel/blob/86f535b8635e780d0707c47ae03658de27ae08bd/packages/babel-core/src/transformation/index.js#L112">https://github.com/babel/babel/blob/86f535b8635e780d0707c47ae03658de27ae08bd/packages/babel-core/src/transformation/index.js#L112</a></p>
-<pre class=" language-js"><code class="language-js"><span class="token comment" spellcheck="true">// merge all plugin visitors into a single visitor</span>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token comment">// merge all plugin visitors into a single visitor</span>
 <span class="token keyword">const</span> visitor <span class="token operator">=</span> traverse<span class="token punctuation">.</span>visitors<span class="token punctuation">.</span><span class="token function">merge</span><span class="token punctuation">(</span>
   visitors<span class="token punctuation">,</span>
   passes<span class="token punctuation">,</span>
   file<span class="token punctuation">.</span>opts<span class="token punctuation">.</span>wrapPluginVisitorMethod<span class="token punctuation">,</span>
 <span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token function">traverse</span><span class="token punctuation">(</span>file<span class="token punctuation">.</span>ast<span class="token punctuation">,</span> visitor<span class="token punctuation">,</span> file<span class="token punctuation">.</span>scope<span class="token punctuation">)</span><span class="token punctuation">;</span> </code></pre>
+<span class="token function">traverse</span><span class="token punctuation">(</span>file<span class="token punctuation">.</span>ast<span class="token punctuation">,</span> visitor<span class="token punctuation">,</span> file<span class="token punctuation">.</span>scope<span class="token punctuation">)</span><span class="token punctuation">;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+
 <h2 id="plugin-执行顺序"><a href="#plugin-执行顺序" class="headerlink" title="plugin 执行顺序"></a>plugin 执行顺序</h2><p>按钩子顺序执行，比如 plugin 里面有 Program.enter，则执行完Program.enter在执行下一个的Program.enter，等程序退出在再顺序触发Program.exit，一次按 plugin 顺序执行钩子。traverse visitor 之前会进行 plugins 里的 visitor 合并，钩子对象都具有 enter 和 exit 方法，钩子函数默认为 enter 函数，最后都合并到一个大的 visitor里面，比如 <code>&#123; ImportDeclaration: &#123; enter: [...], exit: [...] &#125; &#125;</code></p>
-<h2 id="一个简单的插件格式"><a href="#一个简单的插件格式" class="headerlink" title="一个简单的插件格式"></a>一个简单的插件格式</h2><pre class=" language-js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">babelPlug</span><span class="token punctuation">(</span>babel<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-  <span class="token keyword">return</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-    name<span class="token punctuation">:</span> <span class="token string">'babelPlug'</span><span class="token punctuation">,</span>
-    visitor<span class="token punctuation">:</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-      <span class="token function">Program</span><span class="token punctuation">(</span>path<span class="token punctuation">,</span> state<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<h2 id="一个简单的插件格式"><a href="#一个简单的插件格式" class="headerlink" title="一个简单的插件格式"></a>一个简单的插件格式</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">function</span> <span class="token function">babelPlug</span><span class="token punctuation">(</span><span class="token parameter">babel</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token punctuation">&#123;</span>
+    name<span class="token operator">:</span> <span class="token string">'babelPlug'</span><span class="token punctuation">,</span>
+    visitor<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+      <span class="token function">Program</span><span class="token punctuation">(</span><span class="token parameter">path<span class="token punctuation">,</span> state</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
         console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>path<span class="token punctuation">,</span> state<span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-  <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
-<h2 id="visitor-Program"><a href="#visitor-Program" class="headerlink" title="visitor.Program"></a>visitor.Program</h2><pre class=" language-js"><code class="language-js">visitor<span class="token punctuation">:</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-  <span class="token comment" spellcheck="true">// visitor contents</span>
-  <span class="token comment" spellcheck="true">// Visitor 中的每个函数接收2个参数：path 和 state</span>
-  Program<span class="token punctuation">:</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-    <span class="token function">enter</span><span class="token punctuation">(</span>path<span class="token punctuation">,</span> state<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
-    <span class="token function">exit</span><span class="token punctuation">(</span>path<span class="token punctuation">,</span> state<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
 
-    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
-  <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
-  <span class="token function">Program</span><span class="token punctuation">(</span>path<span class="token punctuation">,</span> state<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token comment" spellcheck="true">// 等同于 enter 进入这个钩子</span>
 
-  <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<h2 id="visitor-Program"><a href="#visitor-Program" class="headerlink" title="visitor.Program"></a>visitor.Program</h2><pre class="line-numbers language-js" data-language="js"><code class="language-js">visitor<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// visitor contents</span>
+  <span class="token comment">// Visitor 中的每个函数接收2个参数：path 和 state</span>
+  Program<span class="token operator">:</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">enter</span><span class="token punctuation">(</span><span class="token parameter">path<span class="token punctuation">,</span> state</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token parameter">path<span class="token punctuation">,</span> state</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      
+    <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+  <span class="token function">Program</span><span class="token punctuation">(</span><span class="token parameter">path<span class="token punctuation">,</span> state</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// 等同于 enter 进入这个钩子</span>
+    
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="path-get-‘body’"><a href="#path-get-‘body’" class="headerlink" title="path.get(‘body’)"></a>path.get(‘body’)</h2><p>获取 Program 的 node.body 里面的 Nodes</p>
-<pre class=" language-js"><code class="language-js"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> stmt <span class="token keyword">of</span> astPath<span class="token punctuation">.</span><span class="token keyword">get</span><span class="token punctuation">(</span><span class="token string">'body'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span>t<span class="token punctuation">.</span><span class="token function">isImportDeclaration</span><span class="token punctuation">(</span>stmt<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-    <span class="token comment" spellcheck="true">// program import 语法</span>
-  <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<pre class="line-numbers language-js" data-language="js"><code class="language-js"><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">const</span> stmt <span class="token keyword">of</span> astPath<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span><span class="token string">'body'</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>t<span class="token punctuation">.</span><span class="token function">isImportDeclaration</span><span class="token punctuation">(</span>stmt<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// program import 语法</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <h2 id="state-amp-amp-state-file-的-Map-管理"><a href="#state-amp-amp-state-file-的-Map-管理" class="headerlink" title="state &amp;&amp; state.file 的 Map 管理"></a>state &amp;&amp; state.file 的 Map 管理</h2><p>Program 状态管理，state Program 共享，整个 plugin 链式调用的状态共享，所以要注意状态冲突。</p>
 <p><img src="https://tva1.sinaimg.cn/large/007S8ZIlly1gjvo3a3fqkj30ad03odgh.jpg"></p>
 <p>File –&gt; <a target="_blank" rel="noopener" href="https://github.com/babel/babel/blob/86f535b8635e780d0707c47ae03658de27ae08bd/packages/babel-core/src/transformation/file/file.js#L34">https://github.com/babel/babel/blob/86f535b8635e780d0707c47ae03658de27ae08bd/packages/babel-core/src/transformation/file/file.js#L34</a></p>
@@ -877,10 +886,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 </div>
     </div>

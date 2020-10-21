@@ -29,8 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.1.1"><link rel="alternate" href="/atom.xml" title="Shin's blog" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Shin's blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
 <body>
@@ -358,7 +359,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    275
+                    265
                 </div>
                 
 
@@ -376,31 +377,30 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <p>处理数据结构时，数组运用在不同场景，下面罗列多维数组处理成一维数组的方法</p>
-<h3 id="1-运用字符串对数组进行处理"><a href="#1-运用字符串对数组进行处理" class="headerlink" title="1.运用字符串对数组进行处理"></a>1.运用字符串对数组进行处理</h3><pre class=" language-javascript"><code class="language-javascript"><span class="token comment" spellcheck="true">// 处理[[1],[2, [3, [4]]]]</span>
-<span class="token keyword">function</span> <span class="token function">flatten</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+<h3 id="1-运用字符串对数组进行处理"><a href="#1-运用字符串对数组进行处理" class="headerlink" title="1.运用字符串对数组进行处理"></a>1.运用字符串对数组进行处理</h3><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 处理[[1],[2, [3, [4]]]]</span>
+<span class="token keyword">function</span> <span class="token function">flatten</span><span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
   <span class="token keyword">const</span> symbol <span class="token operator">=</span> <span class="token string">','</span>
   <span class="token keyword">const</span> str <span class="token operator">=</span> arr<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span>symbol<span class="token punctuation">)</span>
   <span class="token keyword">return</span> str<span class="token punctuation">.</span><span class="token function">split</span><span class="token punctuation">(</span>symbol<span class="token punctuation">)</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>这种做法在有很大的局限性，对于处理数字而言，split后数组number变成string，处理string数组收到symbol的影响等</p>
-<h3 id="2-使用数组concat方法"><a href="#2-使用数组concat方法" class="headerlink" title="2.使用数组concat方法"></a>2.使用数组concat方法</h3><pre class=" language-javascript"><code class="language-javascript"><span class="token comment" spellcheck="true">// 处理[[1],[2, &amp;#123;&amp;#125;]]</span>
-<span class="token keyword">function</span> <span class="token function">flatten</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-  <span class="token keyword">return</span> Reflect<span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">.</span>concat<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> arr<span class="token punctuation">)</span>
-  <span class="token comment" spellcheck="true">// return Array.prototype.concat.apply([], arr)</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<h3 id="2-使用数组concat方法"><a href="#2-使用数组concat方法" class="headerlink" title="2.使用数组concat方法"></a>2.使用数组concat方法</h3><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 处理[[1],[2, &#123;&#125;]]</span>
+<span class="token keyword">function</span> <span class="token function">flatten</span><span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token function">Reflect</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">.</span>concat<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> arr<span class="token punctuation">)</span>
+  <span class="token comment">// return Array.prototype.concat.apply([], arr)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>apply只能处理二维数数组一维数组，但是保持了数据的原始性，推荐使用Reflect代替对象原型方法，使代码更加简洁易懂。</p>
-<h3 id="3-递归函数"><a href="#3-递归函数" class="headerlink" title="3.递归函数"></a>3.递归函数</h3><pre class=" language-javascript"><code class="language-javascript"><span class="token comment" spellcheck="true">// 处理[[1],[2, [3, 4, [5, 6]]]]</span>
+<h3 id="3-递归函数"><a href="#3-递归函数" class="headerlink" title="3.递归函数"></a>3.递归函数</h3><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 处理[[1],[2, [3, 4, [5, 6]]]]</span>
 <span class="token keyword">var</span> newArr <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
-<span class="token keyword">function</span> <span class="token function">flatten</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-  arr<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>l <span class="token operator">=</span><span class="token operator">></span> Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>l<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token function">flatten</span><span class="token punctuation">(</span>l<span class="token punctuation">)</span> <span class="token punctuation">:</span> newArr<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">function</span> <span class="token function">flatten</span><span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  arr<span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token parameter">l</span> <span class="token operator">=></span> Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>l<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token function">flatten</span><span class="token punctuation">(</span>l<span class="token punctuation">)</span> <span class="token operator">:</span> newArr<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>l<span class="token punctuation">)</span><span class="token punctuation">)</span>
   <span class="token keyword">return</span> newArr
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>需要预定义额外的变量用于保存递归的数据</p>
-<h3 id="4-reduce-递归"><a href="#4-reduce-递归" class="headerlink" title="4.reduce 递归"></a>4.reduce 递归</h3><pre class=" language-javascript"><code class="language-javascript"><span class="token comment" spellcheck="true">// 处理[[1],[2, [3, 4, [5, 6]]]]</span>
-<span class="token keyword">function</span> <span class="token function">flatten</span><span class="token punctuation">(</span>arr<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
-  <span class="token keyword">return</span> arr<span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span> <span class="token operator">=</span><span class="token operator">></span> a<span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token function">flatten</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">:</span> b<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
-<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
-
+<h3 id="4-reduce-递归"><a href="#4-reduce-递归" class="headerlink" title="4.reduce 递归"></a>4.reduce 递归</h3><pre class="line-numbers language-javascript" data-language="javascript"><code class="language-javascript"><span class="token comment">// 处理[[1],[2, [3, 4, [5, 6]]]]</span>
+<span class="token keyword">function</span> <span class="token function">flatten</span><span class="token punctuation">(</span><span class="token parameter">arr</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> arr<span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token parameter">a<span class="token punctuation">,</span> b</span><span class="token punctuation">)</span> <span class="token operator">=></span> a<span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>Array<span class="token punctuation">.</span><span class="token function">isArray</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token function">flatten</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token operator">:</span> b<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
             </div>
             <hr/>
 
@@ -859,10 +859,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 </div>
     </div>

@@ -29,8 +29,9 @@
 
     <script src="/libs/jquery/jquery.min.js"></script>
 
-<meta name="generator" content="Hexo 5.1.1"><link rel="alternate" href="/atom.xml" title="Shin's blog" type="application/atom+xml">
-<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="Shin's blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+<link rel="stylesheet" href="/css/prism-line-numbers.css" type="text/css"></head>
 
 
 <body>
@@ -362,7 +363,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    598
+                    590
                 </div>
                 
 
@@ -380,20 +381,23 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h3 id="1-animation"><a href="#1-animation" class="headerlink" title="1.animation"></a>1.animation</h3><p>用法：</p>
-<pre class=" language-css"><code class="language-css"><span class="token property">animation</span><span class="token punctuation">:</span> rotate <span class="token number">10</span>s linear infinite<span class="token punctuation">;</span></code></pre>
+<pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token property">animation</span><span class="token punctuation">:</span> rotate 10s linear infinite<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>或是：</p>
-<pre class=" language-css"><code class="language-css"><span class="token property">animation-name</span><span class="token punctuation">:</span> rotate<span class="token punctuation">;</span>
-<span class="token property">animation-duration</span><span class="token punctuation">:</span> <span class="token number">10</span>s<span class="token punctuation">;</span>
+<pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token property">animation-name</span><span class="token punctuation">:</span> rotate<span class="token punctuation">;</span>
+<span class="token property">animation-duration</span><span class="token punctuation">:</span> 10s<span class="token punctuation">;</span>
 <span class="token property">animation-timing-function</span><span class="token punctuation">:</span> linear<span class="token punctuation">;</span>
-<span class="token property">animation-interation-count</span><span class="token punctuation">:</span> infinite<span class="token punctuation">;</span></code></pre>
+<span class="token property">animation-interation-count</span><span class="token punctuation">:</span> infinite<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <ul>
 <li>ainmation-name：设置动画名称，而动画名称一般又是@-keyframes设置的，类似于一个函数名。</li>
 </ul>
-<pre class=" language-css"><code class="language-css"><span class="token atrule"><span class="token rule">@-webkit-keyframes</span> rotate &amp;#123<span class="token punctuation">;</span></span>
-  from &amp;<span class="token hexcode">#123</span><span class="token punctuation">;</span> <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">rotate</span><span class="token punctuation">(</span><span class="token number">0</span>deg<span class="token punctuation">)</span><span class="token punctuation">;</span> &amp;<span class="token hexcode">#125</span><span class="token punctuation">;</span>
-  <span class="token number">50%</span> &amp;<span class="token hexcode">#123</span><span class="token punctuation">;</span> <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">rotate</span><span class="token punctuation">(</span><span class="token number">180</span>deg<span class="token punctuation">)</span><span class="token punctuation">;</span> &amp;<span class="token hexcode">#125</span><span class="token punctuation">;</span>
-  to &amp;<span class="token hexcode">#123</span><span class="token punctuation">;</span> <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">rotate</span><span class="token punctuation">(</span><span class="token number">360</span>deg<span class="token punctuation">)</span><span class="token punctuation">;</span> &amp;<span class="token hexcode">#125</span><span class="token punctuation">;</span>
-&amp;<span class="token hexcode">#125</span><span class="token punctuation">;</span>s</code></pre>
+<pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token atrule"><span class="token rule">@-webkit-keyframes</span> rotate</span> <span class="token punctuation">&#123;</span>
+  <span class="token selector">from</span> <span class="token punctuation">&#123;</span> <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">rotate</span><span class="token punctuation">(</span>0deg<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+  <span class="token selector">50%</span> <span class="token punctuation">&#123;</span> <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">rotate</span><span class="token punctuation">(</span>180deg<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+  <span class="token selector">to</span> <span class="token punctuation">&#123;</span> <span class="token property">transform</span><span class="token punctuation">:</span> <span class="token function">rotate</span><span class="token punctuation">(</span>360deg<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
 <blockquote>
 <p>from(0%)是动画的起始点，to(100%)是动画的终点，而from和to的中间用50%来取中间关键帧的位置。</p>
 </blockquote>
@@ -448,14 +452,17 @@
 <p>现代浏览器一般内置了监听animation动画执行的事件，animationstart，animaionend容易理解，而animationiteration是发生在动画每个迭代的结束，跟animation-direction配合比较好理解。</p>
 </blockquote>
 <h3 id="2-transition过渡"><a href="#2-transition过渡" class="headerlink" title="2.transition过渡"></a>2.transition过渡</h3><p>用法：</p>
-<pre class=" language-css"><code class="language-css"><span class="token property">transition</span><span class="token punctuation">:</span> property duration timing-function delay<span class="token punctuation">;</span></code></pre>
+<pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token property">transition</span><span class="token punctuation">:</span> property duration timing-function delay<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>写法：</p>
-<pre class=" language-css"><code class="language-css"><span class="token property">transition</span><span class="token punctuation">:</span> width <span class="token number">3</span>s ease <span class="token number">1</span>s<span class="token punctuation">;</span></code></pre>
+<pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token property">transition</span><span class="token punctuation">:</span> width 3s ease 1s<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
 <p>或是：</p>
-<pre class=" language-css"><code class="language-css"><span class="token property">transition-property</span><span class="token punctuation">:</span> width<span class="token punctuation">;</span>
-<span class="token property">transition-duration</span><span class="token punctuation">:</span> <span class="token number">3</span>s<span class="token punctuation">;</span>
+<pre class="line-numbers language-css" data-language="css"><code class="language-css"><span class="token property">transition-property</span><span class="token punctuation">:</span> width<span class="token punctuation">;</span>
+<span class="token property">transition-duration</span><span class="token punctuation">:</span> 3s<span class="token punctuation">;</span>
 <span class="token property">transition-timing-function</span><span class="token punctuation">:</span> ease<span class="token punctuation">;</span>
-<span class="token property">transition-delay</span><span class="token punctuation">:</span> <span class="token number">1</span>s<span class="token punctuation">;</span></code></pre>
+<span class="token property">transition-delay</span><span class="token punctuation">:</span> 1s<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
 <blockquote>
 <p>对象属性改变中间的缓冲。过渡有4个属性值。</p>
 </blockquote>
@@ -628,9 +635,9 @@
                             1.封装变量
 闭包可以帮助把一些不暴露在全局变量封装成“私有变量”。假如有个计算乘机的简单函数：
 
-var mult = function() &amp;#123;
+var mult = function() &#123;
   var a = 1;
-  for (var i = arguments
+  for (var i = arguments.len
                         
                     </div>
                     <div class="publish-info">
@@ -681,10 +688,11 @@ var mult = function() &amp;#123;
                         
                             1.animation用法：
 animation: rotate 10s linear infinite;
+
 或是：
 animation-name: rotate;
 animation-duration: 10s;
-animation-tim
+animation-ti
                         
                     </div>
                     <div class="publish-info">
@@ -944,10 +952,6 @@ code[class*="language-"], pre[class*="language-"] { white-space: pre !important;
 
 
 
-
-    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
-        <i class="fas fa-rss"></i>
-    </a>
 
 </div>
     </div>
