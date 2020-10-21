@@ -1,0 +1,1162 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="实现自己的虚拟DOM, Shin&#39;s blog">
+    <meta name="description" content="会者定离，一期一祈">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>实现自己的虚拟DOM | Shin&#39;s blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.1.1"><link rel="alternate" href="/atom.xml" title="Shin's blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Shin&#39;s blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Shin&#39;s blog</div>
+        <div class="logo-desc">
+            
+            会者定离，一期一祈
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/10.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">实现自己的虚拟DOM</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/React/">
+                                <span class="chip bg-color">React</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/JS/" class="post-category">
+                                JS
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2017-07-15
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
+                    2.4k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
+                    9 分
+                </div>
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>你需要知道两件事如果你创建自己的虚拟DOM，你甚至不需要深入React的源码或者深入其他的虚拟DOM实现的源码。他们太大也太复杂，但是我们可以根据核心代码实现一个简要的虚拟DOM仅仅50行的代码。</p>
+<h3 id="以下是两个概念"><a href="#以下是两个概念" class="headerlink" title="以下是两个概念"></a>以下是两个概念</h3><blockquote>
+<ul>
+<li>虚拟DOM是代替真实DOM的一种呈现</li>
+<li>当我们改变我们的虚拟DOM树时，我们会得到一个新的DOM树。通过比较这两个DOM树（新的和旧的），发现不同的地方，我们仅仅需要将那些不同的地方在真实DOM树呈现，所以定义成虚拟的DOM。</li>
+</ul>
+</blockquote>
+<h3 id="下面就让我们深入这两个概念"><a href="#下面就让我们深入这两个概念" class="headerlink" title="下面就让我们深入这两个概念"></a>下面就让我们深入这两个概念</h3><h2 id="我们的DOM"><a href="#我们的DOM" class="headerlink" title="我们的DOM"></a>我们的DOM</h2><p>首先我们需要我们的DOM树存在缓存里，我们可以用一个普通的js对象才存。比如我们有这么个DOM树：</p>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>list<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span>item 1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span>item 2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span></code></pre>
+<p>是不是看起来非常简单。我们该怎么用js的对象来表达这个DOM树呢？</p>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> type<span class="token punctuation">:</span> <span class="token string">'ul'</span><span class="token punctuation">,</span> props<span class="token punctuation">:</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token string">'class'</span><span class="token punctuation">:</span> <span class="token string">'list'</span> <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span> children<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+  <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> type<span class="token punctuation">:</span> <span class="token string">'li'</span><span class="token punctuation">,</span> props<span class="token punctuation">:</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span> children<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'item 1'</span><span class="token punctuation">]</span> <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
+  <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> type<span class="token punctuation">:</span> <span class="token string">'li'</span><span class="token punctuation">,</span> props<span class="token punctuation">:</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span> children<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'item 2'</span><span class="token punctuation">]</span> <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token punctuation">]</span> <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<p>这是可以注意到两件事:</p>
+<blockquote>
+<ul>
+<li>我们用对象来表述我们的DOM</li>
+</ul>
+</blockquote>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> type<span class="token punctuation">:</span> <span class="token string">'…'</span><span class="token punctuation">,</span> props<span class="token punctuation">:</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> … <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span> children<span class="token punctuation">:</span> <span class="token punctuation">[</span> … <span class="token punctuation">]</span> <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<blockquote>
+<ul>
+<li>我们用string来存DOM文本节点</li>
+</ul>
+</blockquote>
+<p>写一颗很大的树在一定的程度上是很难的，所以我们用函数来帮助我们，所以我们能非常简单去理解这种结构</p>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">h</span><span class="token punctuation">(</span>type<span class="token punctuation">,</span> props<span class="token punctuation">,</span> …children<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> type<span class="token punctuation">,</span> props<span class="token punctuation">,</span> children <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<p>现在我们能写出我们的DOM树：</p>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token function">h</span><span class="token punctuation">(</span><span class="token string">'ul'</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> <span class="token string">'class'</span><span class="token punctuation">:</span> <span class="token string">'list'</span> <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
+  <span class="token function">h</span><span class="token punctuation">(</span><span class="token string">'li'</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span> <span class="token string">'item 1'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token function">h</span><span class="token punctuation">(</span><span class="token string">'li'</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span> <span class="token string">'item 2'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>这样它看起来就非常清爽。但是我们还能做的更好些。在这之前你应该听过JSX。这里需要用到它，那它是怎么工作的呢？</p>
+<p>如果你读了官方的babel <a target="_blank" rel="noopener" href="https://babeljs.io/docs/plugins/transform-react-jsx/">JSX</a>文档，babel将把代码编译成：</p>
+<pre class=" language-html"><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>list<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span>item 1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span>item 2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span></code></pre>
+<p>顺畅的转成：</p>
+<pre class=" language-javascript"><code class="language-javascript">React<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">'ul'</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> className<span class="token punctuation">:</span> <span class="token string">'list'</span> <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
+  React<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">'li'</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span> <span class="token string">'item 1'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  React<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">'li'</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span> <span class="token string">'item 2'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>可以注意到一些相似点。React.createElement()和我们的h函数调用，这结果就是我们能平滑的使用JSX。我们仅仅需要在文件顶部行加入一行注释：</p>
+<pre class=" language-html"><code class="language-html">/** @jsx h */
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>ul</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>list<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span>item 1<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>li</span><span class="token punctuation">></span></span>item 2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>li</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>ul</span><span class="token punctuation">></span></span></code></pre>
+<p>所以我们将可以编译下面代码通过babel转义：</p>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">const</span> a <span class="token operator">=</span> <span class="token punctuation">(</span>
+  <span class="token function">h</span><span class="token punctuation">(</span><span class="token string">'ul'</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> className<span class="token punctuation">:</span> <span class="token string">'list'</span> <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
+    <span class="token function">h</span><span class="token punctuation">(</span><span class="token string">'li'</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span> <span class="token string">'item 1'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token function">h</span><span class="token punctuation">(</span><span class="token string">'li'</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span> <span class="token string">'item 2'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+  <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>当我们使用f函数执行时，他将变成普通的js对象–我们的虚拟DOM:</p>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">const</span> a <span class="token operator">=</span> <span class="token punctuation">(</span>
+  <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> type<span class="token punctuation">:</span> <span class="token string">'ul'</span><span class="token punctuation">,</span> props<span class="token punctuation">:</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> className<span class="token punctuation">:</span> <span class="token string">'list'</span> <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span> children<span class="token punctuation">:</span> <span class="token punctuation">[</span>
+    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> type<span class="token punctuation">:</span> <span class="token string">'li'</span><span class="token punctuation">,</span> props<span class="token punctuation">:</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span> children<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'item 1'</span><span class="token punctuation">]</span> <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span>
+    <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> type<span class="token punctuation">:</span> <span class="token string">'li'</span><span class="token punctuation">,</span> props<span class="token punctuation">:</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span><span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span> children<span class="token punctuation">:</span> <span class="token punctuation">[</span><span class="token string">'item 2'</span><span class="token punctuation">]</span> <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+  <span class="token punctuation">]</span> <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+<p>尝试使用jsfiddle来跑下：</p>
+<iframe
+  style="width: 100%; height: 300px"
+  src="https://jsfiddle.net/shinken/zadmbrgf/">
+</iframe>
+
+<h2 id="运用我的的DOM来展示"><a href="#运用我的的DOM来展示" class="headerlink" title="运用我的的DOM来展示"></a>运用我的的DOM来展示</h2><p>现在我们自己用普通的对象来展示DOM树。这是非常好的事情，但是我们还需要知道怎么通过它来创建真实的DOM。我们可不能就把我们的DOM插入真实的DOM中。</p>
+<p>首先我们足一些假设和约定术语:</p>
+<blockquote>
+<ul>
+<li>我将写些可用真实的DOM节点(element, text nodes)，开头用”$”–$parent 将成为真实的DOM元素</li>
+<li>虚拟DOM的展示将用可用的节点来展示</li>
+<li>像React一样，你有且只有一个根节点–其他的所有节点都包含在这里面</li>
+</ul>
+</blockquote>
+<p>好，就像上面说的那样，让我们写一个createElement()函数将虚拟DOM转化为真实的DOM。从现在开始忘掉’props’和’children’，我们在后面讨论：</p>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">createElement</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> node <span class="token operator">===</span> <span class="token string">'string'</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> document<span class="token punctuation">.</span><span class="token function">createTextNode</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>type<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<p>所以，因为我们文本和节点–用普通的js对象就是字符串和元素–这种js对象就是像这种：</p>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> type<span class="token punctuation">:</span> <span class="token string">'…'</span><span class="token punctuation">,</span> props<span class="token punctuation">:</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span> … <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span><span class="token punctuation">,</span> children<span class="token punctuation">:</span> <span class="token punctuation">[</span> … <span class="token punctuation">]</span> <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<p>结果是我们可以通过虚拟的文本节点和DOM节点，它将可以工作。</p>
+<p>现在我们需要考虑的是子节点–每个可能是文本节点或者是元素节点。所以他们同意可以用createElement()函数来创建。你可能想到了，所以我们可以调用createElement()遍历所以的子元素然后将它们appendChild()到我们的元素像这样：</p>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">createElement</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">typeof</span> node <span class="token operator">===</span> <span class="token string">'string'</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> document<span class="token punctuation">.</span><span class="token function">createTextNode</span><span class="token punctuation">(</span>node<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> $el <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span>node<span class="token punctuation">.</span>type<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  node<span class="token punctuation">.</span>children
+    <span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span>createElement<span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span>$el<span class="token punctuation">.</span>appendChild<span class="token punctuation">.</span><span class="token function">bind</span><span class="token punctuation">(</span>$el<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> $el<span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<p>这样写看起来很好，现在我们在将’props’加上。我们等下再来进行讨论，我们不需要理解虚拟DOM的基本概念，但是它们将添加些更复杂的东西。</p>
+<p>现在我们用jsfiddle试下：</p>
+<iframe
+  style="width: 100%; height: 300px"
+  src="https://jsfiddle.net/shinken/zdb00kvg/"
+>
+</iframe>
+
+<h2 id="处理变化"><a href="#处理变化" class="headerlink" title="处理变化"></a>处理变化</h2><p>现在我们能把虚拟DOM转化成真实的DOM了，是时候考虑虚拟DOM树的differ算法了。所以基本上我们需要写个算法，他将对边两个虚拟DOM树（新的和旧的），而我们需要将这些改变写入真实的DOM中。</p>
+<p>怎样去比对两颗虚拟DOM树呢？我们需要处理下面那些问题：</p>
+<blockquote>
+<ul>
+<li>有新的节点增加了，所以node增加了，所以我们需要appendChild()</li>
+</ul>
+</blockquote>
+<p><img src="images/1.png"></p>
+<blockquote>
+<ul>
+<li>没有新的节点然而节点被删了所以我们需要removeChild()<br><img src="images/2.png"></li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>节点比对结果节点全被不一样，所以我们需要replaceChild()<br><img src="images/3.png"></li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>有些节点是一样的，所以我们需要进行深入的比较节点的不一样<br><img src="images/4.png"></li>
+</ul>
+</blockquote>
+<p>好，让我们写一个updateElement()的函数有三个参数$parent, newNode, oldNode, 而$parent是一个真实的DOM，作为我们虚拟DOM的父元素。现在我们来考虑怎么去解决上面描述的问题。</p>
+<h2 id="没有旧节点的情况下"><a href="#没有旧节点的情况下" class="headerlink" title="没有旧节点的情况下"></a>没有旧节点的情况下</h2><p>下面这是非常直接了当，简直是不想解释：</p>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">updateElement</span><span class="token punctuation">(</span>$parent<span class="token punctuation">,</span> newNode<span class="token punctuation">,</span> oldNode<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>oldNode<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    $parent<span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span>
+      <span class="token function">createElement</span><span class="token punctuation">(</span>newNode<span class="token punctuation">)</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<h2 id="没有新节点的情况下"><a href="#没有新节点的情况下" class="headerlink" title="没有新节点的情况下"></a>没有新节点的情况下</h2><p>这是有一个问题，假如没有节点在新的，我们需要把它从真实的DOM中移除，但是我们应该怎么做呢？我们知道父元素(通过一个函数)结果我们目的是调用$parent.removeChild()通过真实的DOM元素引用。但是我们没有这些，然而，假如我们知道父节点的位置，我们就可以得到他的引用通过$parent.childNodes[index]，而下标index就是子节点相对父节点的位置。</p>
+<p>我们目的是通过我们的函数找到我们的下标。我们的代码可能会是这个样子：</p>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">updateElement</span><span class="token punctuation">(</span>$parent<span class="token punctuation">,</span> newNode<span class="token punctuation">,</span> oldNode<span class="token punctuation">,</span> index <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>oldNode<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    $parent<span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span>
+      <span class="token function">createElement</span><span class="token punctuation">(</span>newNode<span class="token punctuation">)</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>newNode<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    $parent<span class="token punctuation">.</span><span class="token function">removeChild</span><span class="token punctuation">(</span>
+      $parent<span class="token punctuation">.</span>childNodes<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<h2 id="节点改变了"><a href="#节点改变了" class="headerlink" title="节点改变了"></a>节点改变了</h2><p>首先我们需要去写一个函数去对比这两个新的和旧的节点，如果改变了就通知我们。我们应该考虑它可能是元素或者是文本节点：</p>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">changed</span><span class="token punctuation">(</span>node1<span class="token punctuation">,</span> node2<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token keyword">typeof</span> node1 <span class="token operator">!==</span> <span class="token keyword">typeof</span> node2 <span class="token operator">||</span>
+         <span class="token keyword">typeof</span> node1 <span class="token operator">===</span> <span class="token string">'string'</span> <span class="token operator">&amp;&amp;</span> node1 <span class="token operator">!==</span> node2 <span class="token operator">||</span>
+         node1<span class="token punctuation">.</span>type <span class="token operator">!==</span> node2<span class="token punctuation">.</span>type
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<p>现在我们有当前节点在父节点的下标我们可以很轻易的替换它通过创建一个新的节点：</p>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">updateElement</span><span class="token punctuation">(</span>$parent<span class="token punctuation">,</span> newNode<span class="token punctuation">,</span> oldNode<span class="token punctuation">,</span> index <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>oldNode<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    $parent<span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span>
+      <span class="token function">createElement</span><span class="token punctuation">(</span>newNode<span class="token punctuation">)</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>newNode<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    $parent<span class="token punctuation">.</span><span class="token function">removeChild</span><span class="token punctuation">(</span>
+      $parent<span class="token punctuation">.</span>childNodes<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">changed</span><span class="token punctuation">(</span>newNode<span class="token punctuation">,</span> oldNode<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    $parent<span class="token punctuation">.</span><span class="token function">replaceChild</span><span class="token punctuation">(</span>
+      <span class="token function">createElement</span><span class="token punctuation">(</span>newNode<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      $parent<span class="token punctuation">.</span>childNodes<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<h2 id="对比子元素"><a href="#对比子元素" class="headerlink" title="对比子元素"></a>对比子元素</h2><p>最后，我们应该通过对比新旧的两个节点去–事实上就是他们调用updateElement()去遍历它们。是的再次递归。</p>
+<p>但是我们有些事情要考虑清楚在我们开始写代码：</p>
+<blockquote>
+<ul>
+<li>我们应该对比子节点仅且当节点是一个元素的时候(文本节点是没有子节点的)</li>
+<li>现在我们通过引用当前的节点作为父节点</li>
+<li>我们应该一个一个的对边所以的子元素–甚至有些情况我们会有’undefined’–没事–我们的函数可以处理</li>
+<li>再就是找下标–它仅仅在是在chilren数字里的子节点的下标</li>
+</ul>
+</blockquote>
+<pre class=" language-javascript"><code class="language-javascript"><span class="token keyword">function</span> <span class="token function">updateElement</span><span class="token punctuation">(</span>$parent<span class="token punctuation">,</span> newNode<span class="token punctuation">,</span> oldNode<span class="token punctuation">,</span> index <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>oldNode<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    $parent<span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span>
+      <span class="token function">createElement</span><span class="token punctuation">(</span>newNode<span class="token punctuation">)</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>newNode<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    $parent<span class="token punctuation">.</span><span class="token function">removeChild</span><span class="token punctuation">(</span>
+      $parent<span class="token punctuation">.</span>childNodes<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">changed</span><span class="token punctuation">(</span>newNode<span class="token punctuation">,</span> oldNode<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    $parent<span class="token punctuation">.</span><span class="token function">replaceChild</span><span class="token punctuation">(</span>
+      <span class="token function">createElement</span><span class="token punctuation">(</span>newNode<span class="token punctuation">)</span><span class="token punctuation">,</span>
+      $parent<span class="token punctuation">.</span>childNodes<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
+    <span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>newNode<span class="token punctuation">.</span>type<span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+    <span class="token keyword">const</span> newLength <span class="token operator">=</span> newNode<span class="token punctuation">.</span>children<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+    <span class="token keyword">const</span> oldLength <span class="token operator">=</span> oldNode<span class="token punctuation">.</span>children<span class="token punctuation">.</span>length<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> newLength <span class="token operator">||</span> i <span class="token operator">&lt;</span> oldLength<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span>#<span class="token number">123</span><span class="token punctuation">;</span>
+      <span class="token function">updateElement</span><span class="token punctuation">(</span>
+        $parent<span class="token punctuation">.</span>childNodes<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">,</span>
+        newNode<span class="token punctuation">.</span>children<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span>
+        oldNode<span class="token punctuation">.</span>children<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span>
+        i
+      <span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+  <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span>
+<span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
+<h2 id="将所有的结果放在一块"><a href="#将所有的结果放在一块" class="headerlink" title="将所有的结果放在一块"></a>将所有的结果放在一块</h2><p>是的我们把所有的代码放在jsfiddle里面，真的花了50行代码</p>
+<iframe
+  style="width: 100%; height: 300px;"
+  src="https://jsfiddle.net/deathmood/0htedLra"
+>
+</iframe>
+
+<p>如果用开发者工具的话可以看到变化当你点击’reload’按钮时</p>
+<p><img src="images/5.gif"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>我们已经做到了，我们完整地写了个我们自己的虚拟DOM。而且他能工作。我希望正在读这篇文章的你能理解这些基本的概念–虚拟DOM什么工作的和react在这引擎下是怎么工作的。</p>
+<p>然而有些事情在这里我们没有延伸到（我将在后续的文章对此进行讨论）</p>
+<blockquote>
+<ul>
+<li>设置元素属性和对比和更新他们</li>
+<li>处理事件–增加事件监听我们的元素</li>
+<li>使我们的虚拟DOM在组件里工作，像React</li>
+<li>获取真实DOM的节点引用</li>
+<li>使用虚拟DOM的第三方库和突变真实的DOM–像jQuery和它的插件</li>
+<li>更多…</li>
+</ul>
+</blockquote>
+<p>原文地址：<img src="https://medium.com/@deathmood/how-to-write-your-own-virtual-dom-ee74acc13060" alt="https://medium.com/@deathmood/how-to-write-your-own-virtual-dom-ee74acc13060"></p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Shin</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://shinken008.github.io/2017/07/15/virtualdom/">https://shinken008.github.io/2017/07/15/virtualdom/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">Shin</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/React/">
+                                    <span class="chip bg-color">React</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+        <div class="disqus-card card" data-aos="fade-up">
+    <div id="disqus_thread" class="card-content">
+        <noscript>Please enable JavaScript to view the
+            <a target="_blank" rel="noopener" href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+    </div>
+</div>
+
+<script type="text/javascript">
+    disqus_config = function () {
+        this.page.url = 'https://shinken008.github.io/2017/07/15/virtualdom/';
+        this.page.identifier = '/2017/07/15/virtualdom/';
+        this.page.title = '实现自己的虚拟DOM';
+    };
+    let disqus_shortname = 'shinken008';
+
+    (function () { // DON'T EDIT BELOW THIS LINE
+        let d = document, s = d.createElement('script');
+        // 如：s.src = 'https://blinkfox.disqus.com/embed.js';
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2017/08/09/virtualdom2/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="实现自己的虚拟DOM: Props &amp; Events">
+                        
+                        <span class="card-title">实现自己的虚拟DOM: Props &amp; Events</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            很开心可以继续分享这个话题，下一个要讨论的就是事件驱动，将使我们实现的婴儿虚拟dom运用到真实的项目开发。
+今天我们主要讨论的的是setting／diffing属性（props）和事件处理。
+babel处理在这之前我么处理一个
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2017-08-09
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/JS/" class="post-category">
+                                    JS
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/React/">
+                        <span class="chip bg-color">React</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2016/09/22/js-bi-bao-de-yi-xie-yong-fa/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/3.jpg" class="responsive-img" alt="js闭包的一些用法">
+                        
+                        <span class="card-title">js闭包的一些用法</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            1.封装变量
+闭包可以帮助把一些不暴露在全局变量封装成“私有变量”。假如有个计算乘机的简单函数：
+
+var mult = function() &amp;#123;
+  var a = 1;
+  for (var i = arguments
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2016-09-22
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/JS/" class="post-category">
+                                    JS
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/%E9%97%AD%E5%8C%85/">
+                        <span class="chip bg-color">闭包</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+<script>
+    $('#articleContent').on('copy', function (e) {
+        // IE8 or earlier browser is 'undefined'
+        if (typeof window.getSelection === 'undefined') return;
+
+        var selection = window.getSelection();
+        // if the selection is short let's not annoy our users.
+        if (('' + selection).length < Number.parseInt('120')) {
+            return;
+        }
+
+        // create a div outside of the visible area and fill it with the selected text.
+        var bodyElement = document.getElementsByTagName('body')[0];
+        var newdiv = document.createElement('div');
+        newdiv.style.position = 'absolute';
+        newdiv.style.left = '-99999px';
+        bodyElement.appendChild(newdiv);
+        newdiv.appendChild(selection.getRangeAt(0).cloneContents());
+
+        // we need a <pre> tag workaround.
+        // otherwise the text inside "pre" loses all the line breaks!
+        if (selection.getRangeAt(0).commonAncestorContainer.nodeName === 'PRE') {
+            newdiv.innerHTML = "<pre>" + newdiv.innerHTML + "</pre>";
+        }
+
+        var url = document.location.href;
+        newdiv.innerHTML += '<br />'
+            + '来源: Shin&#39;s blog<br />'
+            + '文章作者: Shin<br />'
+            + '文章链接: <a href="' + url + '">' + url + '</a><br />'
+            + '本文章著作权归作者所有，任何形式的转载都请注明出处。';
+
+        selection.selectAllChildren(newdiv);
+        window.setTimeout(function () {bodyElement.removeChild(newdiv);}, 200);
+    });
+</script>
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">Shin</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/shinken008" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:shinke008@gmail.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

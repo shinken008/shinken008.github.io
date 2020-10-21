@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Shin&#39;s blog</title>
+  
+  <subtitle>保持好奇的心</subtitle>
+  <link href="https://shinken008.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://shinken008.github.io/"/>
+  <updated>2020-10-20T16:34:19.256Z</updated>
+  <id>https://shinken008.github.io/</id>
+  
+  <author>
+    <name>Shin</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Babel/plugin 开发日记一</title>
+    <link href="https://shinken008.github.io/2020/10/21/babel-plugin-kai-fa-ri-ji-yi/"/>
+    <id>https://shinken008.github.io/2020/10/21/babel-plugin-kai-fa-ri-ji-yi/</id>
+    <published>2020-10-20T16:12:22.000Z</published>
+    <updated>2020-10-20T16:34:19.256Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;traverse-开始遍历&quot;&gt;&lt;a href=&quot;#traverse-开始遍历&quot; class=&quot;headerlink&quot; title=&quot;traverse 开始遍历&quot;&gt;&lt;/a&gt;traverse 开始遍历&lt;/h2&gt;&lt;p&gt; &lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="Babel" scheme="https://shinken008.github.io/categories/Babel/"/>
+    
+    
+    <category term="Babel" scheme="https://shinken008.github.io/tags/Babel/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Taro@3.x 微信小程序不完全升级指南</title>
+    <link href="https://shinken008.github.io/2020/09/13/taro-3-x-wei-xin-xiao-cheng-xu-bu-wan-quan-sheng-ji-zhi-nan/"/>
+    <id>https://shinken008.github.io/2020/09/13/taro-3-x-wei-xin-xiao-cheng-xu-bu-wan-quan-sheng-ji-zhi-nan/</id>
+    <published>2020-09-12T16:17:42.000Z</published>
+    <updated>2020-10-20T16:33:53.265Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;&lt;code&gt;Taro@3.0&lt;/code&gt; 发版以来，基本上保持在一周的时间发版，主要是修复</summary>
+        
+      
+    
+    
+    
+    <category term="小程序" scheme="https://shinken008.github.io/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
+    
+    
+    <category term="小程序" scheme="https://shinken008.github.io/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/"/>
+    
+    <category term="打包" scheme="https://shinken008.github.io/tags/%E6%89%93%E5%8C%85/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>js多维数组处理</title>
+    <link href="https://shinken008.github.io/2017/11/25/js-duo-wei-shu-zu-chu-li/"/>
+    <id>https://shinken008.github.io/2017/11/25/js-duo-wei-shu-zu-chu-li/</id>
+    <published>2017-11-25T14:30:58.000Z</published>
+    <updated>2020-10-20T16:36:17.657Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;处理数据结构时，数组运用在不同场景，下面罗列多维数组处理成一维数组的方法&lt;/p&gt;
+&lt;h3 id=&quot;1-运用字符串对数组进行处理&quot;&gt;&lt;a href=&quot;#1-运用字符串对数组进行处理&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="JS" scheme="https://shinken008.github.io/categories/JS/"/>
+    
+    
+    <category term="Array" scheme="https://shinken008.github.io/tags/Array/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>实现自己的虚拟DOM: Props &amp; Events</title>
+    <link href="https://shinken008.github.io/2017/08/09/virtualdom2/"/>
+    <id>https://shinken008.github.io/2017/08/09/virtualdom2/</id>
+    <published>2017-08-09T06:51:28.000Z</published>
+    <updated>2020-10-20T16:35:21.737Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;很开心可以继续分享这个话题，下一个要讨论的就是事件驱动，将使我们实现的婴儿虚拟dom运用到真实的项目开发。&lt;/p&gt;
+&lt;p&gt;今天我们主要讨论的的是setting／diffing属性（props）和事件处理。&lt;/p&gt;
+&lt;h3 id=&quot;babel处理&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="JS" scheme="https://shinken008.github.io/categories/JS/"/>
+    
+    
+    <category term="React" scheme="https://shinken008.github.io/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>实现自己的虚拟DOM</title>
+    <link href="https://shinken008.github.io/2017/07/15/virtualdom/"/>
+    <id>https://shinken008.github.io/2017/07/15/virtualdom/</id>
+    <published>2017-07-15T13:18:43.000Z</published>
+    <updated>2020-10-20T16:35:17.728Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;你需要知道两件事如果你创建自己的虚拟DOM，你甚至不需要深入React的源码或者深入其他的虚拟DOM实现的源码。他们太大也太复杂，但是我们可以根据核心代码实现一个简要的虚拟DOM仅仅50行的代码。&lt;/p&gt;
+&lt;h3 id=&quot;以下是两个概念&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="JS" scheme="https://shinken008.github.io/categories/JS/"/>
+    
+    
+    <category term="React" scheme="https://shinken008.github.io/tags/React/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>js闭包的一些用法</title>
+    <link href="https://shinken008.github.io/2016/09/22/js-bi-bao-de-yi-xie-yong-fa/"/>
+    <id>https://shinken008.github.io/2016/09/22/js-bi-bao-de-yi-xie-yong-fa/</id>
+    <published>2016-09-22T15:18:43.000Z</published>
+    <updated>2020-10-20T16:36:20.855Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;1-封装变量&quot;&gt;&lt;a href=&quot;#1-封装变量&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="JS" scheme="https://shinken008.github.io/categories/JS/"/>
+    
+    
+    <category term="闭包" scheme="https://shinken008.github.io/tags/%E9%97%AD%E5%8C%85/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>css3中animation和transition的用法</title>
+    <link href="https://shinken008.github.io/2016/09/21/css3-zhong-animation-he-transition-de-yong-fa/"/>
+    <id>https://shinken008.github.io/2016/09/21/css3-zhong-animation-he-transition-de-yong-fa/</id>
+    <published>2016-09-21T15:31:39.000Z</published>
+    <updated>2020-10-20T16:36:35.930Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;1-animation&quot;&gt;&lt;a href=&quot;#1-animation&quot; class=&quot;headerlink&quot; title=&quot;1.animation&quot;&gt;&lt;/a&gt;1.animation&lt;/h3&gt;&lt;p&gt;用法：&lt;/p&gt;
+&lt;pre class=&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="CSS" scheme="https://shinken008.github.io/categories/CSS/"/>
+    
+    
+    <category term="CSS" scheme="https://shinken008.github.io/tags/CSS/"/>
+    
+    <category term="CSS3" scheme="https://shinken008.github.io/tags/CSS3/"/>
+    
+  </entry>
+  
+</feed>
