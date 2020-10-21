@@ -391,7 +391,7 @@
 <p>看到这些我差点笑出声，这是我在 <a target="_blank" rel="noopener" href="https://github.com/NervJS/taro/pull/7240">issue</a> 在讨论 <code>3.x</code> 时看到的，这位同学版本应该是敲错了。不得不说逛社区是件很有意思的事情，有的时候看 <code>issue</code> 能发现一些同道中人，你踩的坑别人也在前赴后继[手动尴尬]。</p>
 <p><code>Taro</code> 目前还有很多的 <a target="_blank" rel="noopener" href="https://github.com/NervJS/taro/issues">坑</a> ，现在有 600+ 的 <code>issue</code> 数，平摊到各个平台其实不会很多，咋看一下 <a target="_blank" rel="noopener" href="https://github.com/NervJS/taro/issues?q=is:issue+is:open+label:V-3">V-3</a> <code>issue</code> 也就几十个。也有可能是用户基数的关系，毕竟刚发版不久，幸存者偏差。这里我不是要劝退想要升级的同学，就像官方说的，”没有枪，没有炮，没有轮子自己造“，不要怂，就是*！首先我们先看看 <code>Taro@3.x</code> 特性。</p>
 <p><b>以下是在小程序场景下升级 <code>Taro@3.x</code> ，其他端升级仅供参考和学习。</b></p>
-<h2 id="84-x61-114-x6f-x40-51-46-x78-特性"><a href="#84-x61-114-x6f-x40-51-46-x78-特性" class="headerlink" title="&#84;&#x61;&#114;&#x6f;&#x40;&#51;&#46;&#x78; 特性"></a><a href="mailto:&#84;&#x61;&#114;&#x6f;&#x40;&#51;&#46;&#x78;">&#84;&#x61;&#114;&#x6f;&#x40;&#51;&#46;&#x78;</a> 特性</h2><ul>
+<h2 id="x54-x61-114-x6f-x40-51-46-120-特性"><a href="#x54-x61-114-x6f-x40-51-46-120-特性" class="headerlink" title="&#x54;&#x61;&#114;&#x6f;&#x40;&#51;&#46;&#120; 特性"></a><a href="mailto:&#x54;&#x61;&#114;&#x6f;&#x40;&#51;&#46;&#120;">&#x54;&#x61;&#114;&#x6f;&#x40;&#51;&#46;&#120;</a> 特性</h2><ul>
 <li>开放式框架</li>
 <li>渲染 HTML 字符串</li>
 <li>充满争议的 CSS-In-JS</li>
@@ -405,7 +405,7 @@
 </ul>
 <p>看到它那么多特性，似乎很诱人，详细参考 <a target="_blank" rel="noopener" href="https://taro-docs.jd.com/">官方文档</a>，文档有的东西在这里就不过多的赘述了。</p>
 <p>下面是如何用上它呢？如果是新项目那很好办，只需要实现新功能，对于旧项目呢？”买不了吃亏，买不了上当“，以其忍受旧的技术栈，不如升级玩出新花样。</p>
-<h4 id="x54-97-114-111-64-x33-46-x78-是个啥"><a href="#x54-97-114-111-64-x33-46-x78-是个啥" class="headerlink" title="&#x54;&#97;&#114;&#111;&#64;&#x33;&#46;&#x78; 是个啥"></a><a href="mailto:&#x54;&#97;&#114;&#111;&#64;&#x33;&#46;&#x78;">&#x54;&#97;&#114;&#111;&#64;&#x33;&#46;&#x78;</a> 是个啥</h4><p>首先先简单了解下框架原理和解决的问题。</p>
+<h4 id="84-x61-114-111-x40-x33-46-120-是个啥"><a href="#84-x61-114-111-x40-x33-46-120-是个啥" class="headerlink" title="&#84;&#x61;&#114;&#111;&#x40;&#x33;&#46;&#120; 是个啥"></a><a href="mailto:&#84;&#x61;&#114;&#111;&#x40;&#x33;&#46;&#120;">&#84;&#x61;&#114;&#111;&#x40;&#x33;&#46;&#120;</a> 是个啥</h4><p>首先先简单了解下框架原理和解决的问题。</p>
 <h5 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h5><p>下面是引用官方的一张架构图：</p>
 <img width="800" src="https://storage.jd.com/taro-source/taro-docs/WechatIMG1393.png" />
 
@@ -421,7 +421,7 @@
 </ul>
 <p>从架构层面上讲，Taro 从一个编译型框架变成了一个运行时框架，基本上曾经的 <code>Taro</code> 无法运行的代码在 <code>Taro Next</code> 中完全没有压力。<code>Taro@3.x</code> 在运行时维护了一个 <code>DOM</code> 模型，使得编译的时候不去做 <code>data xml</code> 转化，从而规避掉了编译带来的 <code>bug</code>，同时降低学习成本，<code>PC</code> 端开发的同学也能轻松接入。</p>
 <p>看起来挺香的。了解了一些知识后，下面我们先从依赖开始升级。</p>
-<h2 id="x54-x61-x72-x6f-x40-51-x2e-120-依赖"><a href="#x54-x61-x72-x6f-x40-51-x2e-120-依赖" class="headerlink" title="&#x54;&#x61;&#x72;&#x6f;&#x40;&#51;&#x2e;&#120; 依赖"></a><a href="mailto:&#x54;&#x61;&#x72;&#x6f;&#x40;&#51;&#x2e;&#120;">&#x54;&#x61;&#x72;&#x6f;&#x40;&#51;&#x2e;&#120;</a> 依赖</h2><p>以下是基于 <code>Taro@2.2.5</code> 升级到基于 <code>React@16.10.0</code> 框架 <code>Taro@lastest(@3.0.7)</code> 的历程。</p>
+<h2 id="x54-97-x72-111-64-x33-46-x78-依赖"><a href="#x54-97-x72-111-64-x33-46-x78-依赖" class="headerlink" title="&#x54;&#97;&#x72;&#111;&#64;&#x33;&#46;&#x78; 依赖"></a><a href="mailto:&#x54;&#97;&#x72;&#111;&#64;&#x33;&#46;&#x78;">&#x54;&#97;&#x72;&#111;&#64;&#x33;&#46;&#x78;</a> 依赖</h2><p>以下是基于 <code>Taro@2.2.5</code> 升级到基于 <code>React@16.10.0</code> 框架 <code>Taro@lastest(@3.0.7)</code> 的历程。</p>
 <h4 id="框架选型"><a href="#框架选型" class="headerlink" title="框架选型"></a>框架选型</h4><p>对用户来说，开放式框架给了用户更多地选择，原来的版本只支持的类 <code>React</code> 语法，现在完全可以使用社区的其他框架，比如 <code>Vue 2</code>、<code>Vue 3</code>、<code>jQuery</code>。在这里因为我是一个 <code>React</code> 的重度用户，比起官方的 <code>Nerv</code>，倾向于 <code>React</code>。而且 <code>React</code> 是一个非常优秀的开源项目，有庞大的团队在维护。这里安利一下 <a target="_blank" rel="noopener" href="https://github.com/facebook/react">React</a>，<a target="_blank" rel="noopener" href="https://reactjs.org/blog/2020/08/10/react-v17-rc.html">React@17.0</a> 发布了，只是一个过渡版本，消除了设计上的隐患，帮助用户更安全的升级过渡，新的功能特性放在 <code>React@18</code> 发布，有没有一种服务到家的感觉（这里有点要黑 <code>Taro@3.x break change</code> 式升级的嫌疑）。</p>
 <p>跑题了，下面继续介绍 <code>Taro</code>升级，下面是选择 <code>React</code> 框架需要改造的地方：</p>
 <ul>
@@ -480,11 +480,11 @@ npm i -D @babel/core babel-preset-taro // babel 相关</code></pre>
 <span class="token operator">&amp;</span>#<span class="token number">125</span><span class="token punctuation">;</span></code></pre>
 </li>
 </ul>
-<h2 id="x54-97-x72-111-x40-51-46-x78-业务代码改造"><a href="#x54-97-x72-111-x40-51-46-x78-业务代码改造" class="headerlink" title="&#x54;&#97;&#x72;&#111;&#x40;&#51;&#46;&#x78; 业务代码改造"></a><a href="mailto:&#x54;&#97;&#x72;&#111;&#x40;&#51;&#46;&#x78;">&#x54;&#97;&#x72;&#111;&#x40;&#51;&#46;&#x78;</a> 业务代码改造</h2><h4 id="页面-config-独立文件"><a href="#页面-config-独立文件" class="headerlink" title="页面 config 独立文件"></a>页面 config 独立文件</h4><p>在 <code>Taro</code> 1.x，2.x 时，配置是在页面实例里面去配置 <code>config</code>，编译后输出 <code>x.json</code> 配置文件。在 <code>Taro@3.x</code> 里，需要在同级目录里新增一个独立的 <code>JS</code> 文件去配置：<code>x.config.js</code>。</p>
+<h2 id="84-97-114-111-x40-x33-46-120-业务代码改造"><a href="#84-97-114-111-x40-x33-46-120-业务代码改造" class="headerlink" title="&#84;&#97;&#114;&#111;&#x40;&#x33;&#46;&#120; 业务代码改造"></a><a href="mailto:&#84;&#97;&#114;&#111;&#x40;&#x33;&#46;&#120;">&#84;&#97;&#114;&#111;&#x40;&#x33;&#46;&#120;</a> 业务代码改造</h2><h4 id="页面-config-独立文件"><a href="#页面-config-独立文件" class="headerlink" title="页面 config 独立文件"></a>页面 config 独立文件</h4><p>在 <code>Taro</code> 1.x，2.x 时，配置是在页面实例里面去配置 <code>config</code>，编译后输出 <code>x.json</code> 配置文件。在 <code>Taro@3.x</code> 里，需要在同级目录里新增一个独立的 <code>JS</code> 文件去配置：<code>x.config.js</code>。</p>
 <p>在这里需要注意的一点是，跟页面代码一起的 <code>config</code> 会通过 <code>webpack</code> 编译，而独立成 <code>x.config.js</code> 只会被 <code>babel-register</code> 进行编译，在项目里刚好 <code>config</code> 配置的 <code>pages</code> 常量是根据不同的场景定义的 <code>webpack</code> 常量，所以 <code>config.js</code> 取不到 <code>webpack</code> 常量配置报错。解决方案是，使用 <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/babel-plugin-transform-define">babel-plugin-transform-define</a>，主要不能与 <code>webpack</code> 常量冲突，需要额外定义 <code>config.js</code> 里面的常量。这种解决方式毕竟不优雅，官方考虑在后续添加这个特性，<a target="_blank" rel="noopener" href="https://github.com/NervJS/taro/issues/7011">相关issue</a>。</p>
 <h4 id="config-index-配置文件"><a href="#config-index-配置文件" class="headerlink" title="config/index 配置文件"></a>config/index 配置文件</h4><ul>
 <li><code>Config.framework</code> 配置当前小程序使用的框架 <code>React | Vue | Nerv</code>；</li>
-<li><code>Config.defineContants</code>。<code>Taro@2.x</code> 常量的 <code>value</code> 可以使用 <code>key: &#39;我是字符串&#39;</code> 。在<a href="mailto:&#x54;&#97;&#x72;&#111;&#x40;&#51;&#46;&#x78;">&#x54;&#97;&#x72;&#111;&#x40;&#51;&#46;&#x78;</a> 编译会报错，要用 <code>String</code> 再包一层，比如 <code>key: JSON.stringify(&#39;我是字符串&#39;)</code>，这里建议定义的常量值都使用 <code>JSON.stringify</code> 处理一下。</li>
+<li><code>Config.defineContants</code>。<code>Taro@2.x</code> 常量的 <code>value</code> 可以使用 <code>key: &#39;我是字符串&#39;</code> 。在<a href="mailto:&#x54;&#x61;&#114;&#111;&#x40;&#51;&#46;&#x78;">&#x54;&#x61;&#114;&#111;&#x40;&#51;&#46;&#x78;</a> 编译会报错，要用 <code>String</code> 再包一层，比如 <code>key: JSON.stringify(&#39;我是字符串&#39;)</code>，这里建议定义的常量值都使用 <code>JSON.stringify</code> 处理一下。</li>
 <li><code>Config.terser </code>压缩配置项，terser 配置只在生产模式下生效。如果你正在使用 <code>watch</code> 模式，又希望启用 <code>terser</code>，那么则需要设置，<code>process.env.NODE_ENV</code> 为 <code>production</code>，将不会生成 <code>source-map</code> 文件。</li>
 </ul>
 <h4 id="页面实例的改动"><a href="#页面实例的改动" class="headerlink" title="页面实例的改动"></a>页面实例的改动</h4><ul>
@@ -531,7 +531,7 @@ npm i -D @babel/core babel-preset-taro // babel 相关</code></pre>
 <ul>
 <li>…</li>
 </ul>
-<h2 id="84-x61-114-111-64-x33-46-120-多场景下框架的兼容"><a href="#84-x61-114-111-64-x33-46-120-多场景下框架的兼容" class="headerlink" title="&#84;&#x61;&#114;&#111;&#64;&#x33;&#46;&#120; 多场景下框架的兼容"></a><a href="mailto:&#84;&#x61;&#114;&#111;&#64;&#x33;&#46;&#120;">&#84;&#x61;&#114;&#111;&#64;&#x33;&#46;&#120;</a> 多场景下框架的兼容</h2><p>在 <code>Taro@2.x</code> ，小程序分包我们可以使用宿主小程序的框架，但在升级 <code>Taro@3.x </code>过程中，我们需要分析 2.x 和 3.x 框架版本能不能做到共用。这个章节我们针对主包、分包和插件场景下对小程序的运行、打包和包大小进行分析，演示多场景框架升级的可行性。</p>
+<h2 id="x54-x61-114-x6f-64-x33-46-x78-多场景下框架的兼容"><a href="#x54-x61-114-x6f-64-x33-46-x78-多场景下框架的兼容" class="headerlink" title="&#x54;&#x61;&#114;&#x6f;&#64;&#x33;&#46;&#x78; 多场景下框架的兼容"></a><a href="mailto:&#x54;&#x61;&#114;&#x6f;&#64;&#x33;&#46;&#x78;">&#x54;&#x61;&#114;&#x6f;&#64;&#x33;&#46;&#x78;</a> 多场景下框架的兼容</h2><p>在 <code>Taro@2.x</code> ，小程序分包我们可以使用宿主小程序的框架，但在升级 <code>Taro@3.x </code>过程中，我们需要分析 2.x 和 3.x 框架版本能不能做到共用。这个章节我们针对主包、分包和插件场景下对小程序的运行、打包和包大小进行分析，演示多场景框架升级的可行性。</p>
 <h4 id="独立运行"><a href="#独立运行" class="headerlink" title="独立运行"></a>独立运行</h4><p>在58小程序体系里面，经常会有同一份源码编译到不同端的场景，以及借助内部工程化管理工具 <code>MPS</code> 更为便捷的管理分包，组件。在分包和插件的场景下，是一份这样的目录结构：</p>
 <p><img width="200" src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghpj0nbtjfj30go10udiv.jpg" /><img width="200" src="https://tva1.sinaimg.cn/large/007S8ZIlgy1ghpj573w1wj30gc0l0tai.jpg" /></p>
 <h5 id="分包"><a href="#分包" class="headerlink" title="分包"></a>分包</h5><p>在分包场景中，为了减少包大小，分包尽量减少了依赖第三方 <code>vendors</code> 的注入，比如 <code>Taro</code>，共用主包的 <code>vendor</code>，删掉了无效的 <code>app.x</code> 和 <code>project.config.json</code>。在升级 <code>Taro@3.x</code> 的过程中，由于框架机制的改变，而无法做到与低于 3.0 的版本做到框架的共用。因为在3.x，各个 <code>Page</code> 依赖入口文件 <code>app.js</code>  <code>createReactApp(App: React.ComponentClass, react: typeof React, reactdom, config: AppConfig)</code>  创建的 <code>Current</code>（包含 <code>app</code> ,  <code>router</code> ,  <code>page</code> ）和 <code>Reconciler</code> 实例，就是 <code>page</code> 依赖执行 <code>app.js</code> 文件（参考<a target="_blank" rel="noopener" href="https://github.com/NervJS/taro/blob/next/packages/taro-runtime/src/dsl/react.ts">代码实现</a>）。但是分包的 <code>app.js</code> 不是作为入口文件执行的，咋办呢？</p>
@@ -674,8 +674,8 @@ console<span class="token punctuation">.</span><span class="token function">log<
 <thead>
 <tr>
 <th></th>
-<th><a href="mailto:&#84;&#x61;&#x72;&#x6f;&#64;&#50;&#46;&#x32;&#46;&#x35;">&#84;&#x61;&#x72;&#x6f;&#64;&#50;&#46;&#x32;&#46;&#x35;</a></th>
-<th><a href="mailto:&#x54;&#x61;&#114;&#111;&#x40;&#x33;&#x2e;&#48;&#46;&#55;">&#x54;&#x61;&#114;&#111;&#x40;&#x33;&#x2e;&#48;&#46;&#55;</a></th>
+<th><a href="mailto:&#84;&#97;&#114;&#x6f;&#x40;&#50;&#46;&#50;&#46;&#53;">&#84;&#97;&#114;&#x6f;&#x40;&#50;&#46;&#50;&#46;&#53;</a></th>
+<th><a href="mailto:&#x54;&#x61;&#114;&#x6f;&#x40;&#51;&#x2e;&#48;&#x2e;&#55;">&#x54;&#x61;&#114;&#x6f;&#x40;&#51;&#x2e;&#48;&#x2e;&#55;</a></th>
 </tr>
 </thead>
 <tbody><tr>
