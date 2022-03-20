@@ -736,8 +736,9 @@ body,button {
 	margin-bottom:2em
 }
 .page-18 .text {
-	margin-left:1em;
-	margin-right:1em
+	box-sizing: border-box;
+	padding-left:1em;
+	padding-right:1em
 }
 .page-20 {
 	background-color:#fcd0ca;
@@ -751,6 +752,9 @@ body,button {
 .page-21 {
 	/* background:#fbf2a3 url(img/iali59_bg.jpg) */
 	background:#fbf2a3 url(https://pic7.58cdn.com.cn/nowater/frs/n_v2b299b40a11b64af18fa2c5f634e371ee.jpg)
+}
+.page-21 h3:nth-child(2) {
+	padding-top: .2em;
 }
 .page-22 {
 	background-color:#f5d484
@@ -832,7 +836,9 @@ body,button {
 	/* background:#94c2e3 url(img/iali57.jpg) left bottom no-repeat */
 }
 .page-34 h3 {
-	color:#fff
+	position:static;
+	color:#fff;
+	text-align: center;
 }
 .page-35 {
 	/* background:#fff url(img/iali8_bg.png) left bottom repeat-x; */
@@ -1020,13 +1026,19 @@ body,button {
 .page-53 {
 	background-color:#febebe
 }
+.page-53 h3 {
+	font-size:1.6em;
+	padding-top:0em;
+}
 .page-54 {
 	background:#d3d2d0 url(img/319280_bg.jpg) repeat
 	/* background:#d3d2d0 url(img/319280_bg.jpg) repeat */
 }
-.page-54 .center-img {
+.page-54 div.center-img {
 	/* background-image:url(img/319280.jpg); */
 	background-image:url(https://pic4.58cdn.com.cn/nowater/frs/n_v20863abb1f00a4067bc9c1be235f92020.jpg);
+	background-size: 60% auto;
+	-webkit-background-size: 60% auto;
 	text-indent:-99999px
 }
 .page-54 h3 {
